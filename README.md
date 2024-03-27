@@ -1,2 +1,2 @@
 
-# Module M2 Frontend Metadata Recommendations
+# Module M2 Frontend Metadata Search

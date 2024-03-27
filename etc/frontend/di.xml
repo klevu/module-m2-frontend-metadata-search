@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<!-- Copyright © Klevu Oy. All rights reserved. See LICENSE.txt for license details. -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="Klevu\FrontendMetadata\ViewModel\PageMeta">
+        <arguments>
+            <argument name="isEnabledConditions" xsi:type="array">
+                <item name="klevu_modules_enabled" xsi:type="array">
+                    <item name="klevu_quick_enabled"
+                          xsi:type="object">Klevu\FrontendSearch\Service\IsEnabledCondition\IsQuickSearchEnabledCondition</item>
+                    <item name="klevu_srlp_enabled"
+                          xsi:type="object">Klevu\FrontendSearch\Service\IsEnabledCondition\IsSrlpEnabledCondition</item>
+                </item>
+            </argument>
+            <argument name="pageMetaProviders" xsi:type="array">
+                <item name="quick"
+                      xsi:type="object">Klevu\FrontendMetadataSearch\Service\Provider\QuickSearchMetaProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Klevu\FrontendMetadataSearch\Service\Provider\SearchMetaProvider">
+        <arguments>
+            <argument name="landingUrlProvider" xsi:type="object">Klevu\FrontendSearch\Service\Provider\LandingUrlProvider</argument>
+            <argument name="queryParamProvider" xsi:type="object">Klevu\FrontendSearch\Service\Provider\QueryParameterProvider</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Klevu\FrontendMetadataSearch\ViewModel\PageMeta\Search"
+                 type="Klevu\FrontendMetadata\ViewModel\PageMeta">
+        <arguments>
+            <argument name="pageMetaProviders" xsi:type="array">
+                <item name="srlp" xsi:type="object">Klevu\FrontendMetadataSearch\Service\Provider\SearchMetaProvider</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Klevu\FrontendMetadata\Service\Provider\PageTypeMetaProvider">
+        <arguments>
+            <argument name="requestPaths" xsi:type="array">
+                <item name="srlp" xsi:type="array">
+                    <item name="path" xsi:type="string"><![CDATA[catalogsearch/result]]></item>
+                    <item name="pageType" xsi:type="string">srlp</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>
